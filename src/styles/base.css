@@ -1,0 +1,50 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            overflow-x: clip;
+        }
+
+        #app {
+            width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
+            overflow-x: clip;
+        }
+
+        img,
+        video,
+        canvas,
+        svg {
+            max-width: 100%;
+        }
+
+        :root {
+            --pink-light: #fce4ec;
+            --pink-medium: #f48fb1;
+            --pink-dark: #c2185b;
+            --gold: #d4a843;
+            --gold-light: #f0d78c;
+            --gold-dark: #b8860b;
+            --cream: #fef9f4;
+            --text-dark: #4a2040;
+            --text-medium: #7a5070;
+        }
+
+        body {
+            background-color: var(--cream);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            touch-action: manipulation;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    overscroll-behavior: none;
+    overflow-wrap: anywhere;
+}

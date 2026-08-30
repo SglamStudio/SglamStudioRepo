@@ -1,0 +1,230 @@
+        /* ─── DECORATIVE DIVIDER ─── */
+        .divider {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .divider-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .divider-line::before,
+        .divider-line::after {
+            content: '';
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+
+        .divider-line span {
+            color: var(--gold);
+            font-size: 16px;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            background: linear-gradient(135deg, #1a0a14, #2d1228);
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .footer .brand-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            color: var(--gold-light);
+            margin-bottom: 8px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 600px) {
+            .products-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 18px;
+            }
+            .product-image-wrap {
+                height: 200px;
+                padding: 15px;
+            }
+            .product-image-wrap img {
+                max-height: 170px;
+            }
+            .header {
+                padding: 35px 20px 45px;
+            }
+            .category-banner h2 {
+                font-size: 24px;
+            }
+            .cart-float {
+                bottom: 80px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+                font-size: 22px;
+            }
+            .cart-drawer {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* ─── SPARKLE ANIMATION ─── */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        /* ─── ZOOM MODAL ─── */
+        .zoom-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 4, 14, 0.88);
+            z-index: 9999;
+            cursor: zoom-out;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            -webkit-backdrop-filter: blur(6px);
+
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .zoom-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .zoom-overlay img {
+            max-width: 90vw;
+            max-height: 88vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 0 60px rgba(212,168,67,0.25), 0 0 120px rgba(194,24,91,0.15);
+            animation: zoomIn 0.4s cubic-bezier(.22,.68,0,1.2);
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        .zoom-close {
+            position: absolute;
+            top: 20px; right: 28px;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(212,168,67,0.4);
+            color: var(--gold-light);
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            z-index: 10001;
+            line-height: 1;
+        }
+
+        .zoom-close:hover {
+            background: rgba(255,255,255,0.22);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        .product-image-wrap::after {
+            content: '\f00e';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--text-medium);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .product-card:hover .product-image-wrap::after {
+            opacity: 1;
+        }
+
+        /* ─── ADDED TOAST ─── */
+        .toast-added {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: linear-gradient(135deg, #1a0a14, #2d1228);
+            color: var(--gold-light);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            box-shadow: 0 4px 24px rgba(74,32,64,0.3);
+            border: 1px solid rgba(212,168,67,0.3);
+            z-index: 8000;
+            opacity: 0;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+            width: max-content;
+            max-width: calc(100% - 32px);
+            white-space: normal;
+            text-align: center;
+        }
+
+        .toast-added.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+/* ─── SMOOTH SCROLL ─── */
+        html {
+            -webkit-scroll-behavior: smooth;
+    scroll-behavior: smooth;
+        }
