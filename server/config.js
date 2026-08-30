@@ -7,6 +7,7 @@ const schema = z.object({
   APP_ORIGIN: z.string().url().default('http://localhost:5173'),
   DATABASE_URL: z.string().min(1).default('postgres://glamstudio:glamstudio@localhost:5432/glamstudio'),
   DATABASE_SSL: z.enum(['true', 'false']).default('false'),
+  DATABASE_POOL_MAX: z.coerce.number().int().min(1).max(20).default(process.env.VERCEL ? 2 : 10),
   ADMIN_SESSION_DAYS: z.coerce.number().int().min(1).max(90).default(30),
   ACTIVATION_TOKEN_MINUTES: z.coerce.number().int().min(5).max(60).default(10),
   CSRF_SECRET: z.string().min(32).default('development-only-change-this-csrf-secret-32-chars')

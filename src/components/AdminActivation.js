@@ -4,7 +4,7 @@ export function AdminActivation() {
       <h2 id="activationTitle">Activar dispositivo</h2>
       <p>Este enlace autorizará este dispositivo para administrar Glam Studio.</p>
       <label for="activationDeviceName">Nombre del dispositivo</label>
-      <input id="activationDeviceName" name="deviceName" maxlength="80" required placeholder="Ej: Mi computador">
+      <input id="activationDeviceName" name="deviceName" maxlength="120" required placeholder="Ej: Mi computador">
       <button class="admin-save-btn" type="submit">Activar dispositivo</button>
       <p class="admin-activation-error" id="activationError" role="alert"></p>
     </form>

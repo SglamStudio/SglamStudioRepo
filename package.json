@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "concurrently -k \"npm:dev:server\" \"npm:dev:client\"",
     "dev:client": "vite",
@@ -11,6 +14,8 @@
     "preview": "vite preview",
     "start": "node server/index.js",
     "db:migrate": "node server/scripts/migrate.js",
+    "catalog:seed": "node server/scripts/seedCatalog.js",
+    "catalog:import-legacy": "node server/scripts/importLegacyBackup.js",
     "admin:create-invite": "node server/scripts/createActivationToken.js",
     "test": "node --test"
   },

@@ -6,7 +6,10 @@ const { Pool } = pg;
 export const pool = new Pool({
   connectionString: config.DATABASE_URL,
   ssl: config.databaseSsl ? { rejectUnauthorized: false } : undefined,
-  max: 10
+  max: config.DATABASE_POOL_MAX,
+  idleTimeoutMillis: process.env.VERCEL ? 10_000 : 30_000,
+  connectionTimeoutMillis: 10_000,
+  allowExitOnIdle: Boolean(process.env.VERCEL)
 });
 
 export async function withTransaction(callback) {

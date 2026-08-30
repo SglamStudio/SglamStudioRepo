@@ -7,6 +7,6 @@ import { Cart } from './Cart.js';
 import { CheckoutModal } from './CheckoutModal.js';
 import { Feedback } from './Feedback.js';
 
-export function App() {
-  return [Header(), CategoryNav(), SearchBar(), Catalog(), Footer(), Cart(), CheckoutModal(), Feedback()].join('');
+export function App({ categories, products } = {}) {
+  return [Header(), CategoryNav(categories), SearchBar(), Catalog(categories, products), Footer(), Cart(), CheckoutModal(), Feedback()].join('');
 }

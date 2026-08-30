@@ -29,6 +29,11 @@ export function cookieOptions() {
   };
 }
 
+export function clearCookieOptions() {
+  const { maxAge, ...options } = cookieOptions();
+  return options;
+}
+
 export function activationUrl(token) {
   return `${config.APP_ORIGIN}/#admin-activate=${encodeURIComponent(token)}`;
 }

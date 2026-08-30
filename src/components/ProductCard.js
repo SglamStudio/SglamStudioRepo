@@ -2,6 +2,7 @@ import { escapeAttribute, escapeHtml } from '../utils/html.js';
 
 export function ProductCard(product) {
   return `<article class="product-card"
+    data-id="${escapeAttribute(product.id || '')}"
     data-name="${escapeAttribute(product.name)}"
     data-brand="${escapeAttribute(product.brand)}"
     data-price="${product.price}"
@@ -14,7 +15,7 @@ export function ProductCard(product) {
       <div class="product-brand">${escapeHtml(product.displayBrand || product.brand)}</div>
       <div class="product-name">${escapeHtml(product.displayName || product.name)}</div>
       <div class="product-price">${escapeHtml(product.priceDisplay)}</div>
-      <button class="add-cart-btn" onclick="addToCart(this)"><i class="fas fa-shopping-bag"></i> Agregar al carrito</button>
+      <button class="add-cart-btn" type="button" data-action="add-to-cart"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Agregar al carrito</button>
     </div>
   </article>`;
 }

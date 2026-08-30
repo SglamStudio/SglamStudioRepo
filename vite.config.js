@@ -1,6 +1,12 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  publicDir: false,
+  build: {
+    // Vercel sirve public/** por CDN cuando detecta la aplicación Express.
+    outDir: 'public',
+    emptyOutDir: true
+  },
   server: {
     proxy: {
       '/api': {

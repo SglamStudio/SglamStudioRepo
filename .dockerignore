@@ -1,6 +1,7 @@
 node_modules
 dist
-public
-.DS_Store
+.git
 .env
+*.zip
 coverage
+npm-debug.log*

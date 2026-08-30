@@ -13,7 +13,7 @@ export const categories = [
     "navLabel": "Bases",
     "adminLabel": "Bases",
     "icon": "fa-droplet",
-    "title": "<i class=\"fas fa-droplet\"></i> Bases, Correctores & Contorno",
+    "title": "Bases, Correctores & Contorno",
     "subtitle": "Flawless base, concealers & contour",
     "gridId": "basesGrid"
   },
@@ -22,7 +22,7 @@ export const categories = [
     "navLabel": "Polvo",
     "adminLabel": "Polvo & Rubor",
     "icon": "fa-sun",
-    "title": "<i class=\"fas fa-sun\"></i> Polvo y Rubor",
+    "title": "Polvo y Rubor",
     "subtitle": "Setting powders & blush",
     "gridId": "polvoRuborGrid"
   },
@@ -31,7 +31,7 @@ export const categories = [
     "navLabel": "Ojos",
     "adminLabel": "Ojos",
     "icon": "fa-eye",
-    "title": "<i class=\"fas fa-eye\"></i> Ojos",
+    "title": "Ojos",
     "subtitle": "Sombras, delineados & cejas",
     "gridId": "ojosGrid"
   },
@@ -40,7 +40,7 @@ export const categories = [
     "navLabel": "Brochas",
     "adminLabel": "Brochas",
     "icon": "fa-wand-magic-sparkles",
-    "title": "<i class=\"fas fa-wand-magic-sparkles\"></i> Brochas y Productos Faciales",
+    "title": "Brochas y Productos Faciales",
     "subtitle": "",
     "gridId": "brochasGrid"
   }

@@ -334,6 +334,9 @@
         .product-card.search-hidden {
             display: none !important;
         }
+        .catalog-category.search-hidden {
+            display: none !important;
+        }
 
         .category-banner.search-hidden,
         .products-section.search-hidden {

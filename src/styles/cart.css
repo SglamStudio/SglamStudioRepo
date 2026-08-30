@@ -548,6 +548,19 @@
             display: flex;
             gap: 10px;
         }
+        .checkout-fieldset {
+            min-width: 0;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        .checkout-fieldset legend {
+            margin-bottom: 8px;
+            color: #4a2040;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+        }
         .checkout-payment-option {
             flex: 1;
             padding: 12px;
