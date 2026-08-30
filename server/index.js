@@ -16,8 +16,7 @@ import catalogRoutes from './routes/catalogRoutes.js';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, '..');
 
-export function createApp() {
-  const app = express();
+export function createApp(app = express()) {
   app.disable('x-powered-by');
   if (config.isProduction) app.set('trust proxy', 1);
   app.use(helmet({
