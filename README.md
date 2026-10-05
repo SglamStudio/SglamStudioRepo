@@ -4,7 +4,7 @@ Catálogo Vite con API Express, PostgreSQL administrado en Supabase y panel priv
 
 ## Estado de la migración
 
-- 5 categorías.     
+- 5 categorías.
 - 72 marcas canónicas. Se consolidan `Huxiabeauty/HuxiaBeauty`, `MyK/MYK`, `Ani-K/ANI-K` y `Enchante/Enchanté` mediante alias normalizados.
 - 197 productos activos.
 - 197 imágenes principales HTTPS.
