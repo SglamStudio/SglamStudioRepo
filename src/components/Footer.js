@@ -4,7 +4,7 @@ import { escapeAttribute, escapeHtml } from '../utils/html.js';
 export function Footer() {
   return `<footer class="site-footer">
     <div class="site-footer__inner">
-      <img class="footer-logo" src="${escapeAttribute(storeConfig.logoLightUrl)}" alt="Glam Studio" width="101" height="48">
+      <img class="footer-logo" src="${escapeAttribute(storeConfig.logoLightUrl)}" alt="Glam Studio" width="98" height="72">
       <p class="footer-tagline">Maquillaje y cuidado de la piel. Tu pedido llega por WhatsApp.</p>
       <div class="footer-links">
         <a href="${escapeAttribute(storeConfig.whatsappUrl)}" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>

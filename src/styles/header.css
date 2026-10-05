@@ -28,7 +28,7 @@
 
 .site-logo img {
   display: block;
-  height: 46px;
+  height: 54px;
   width: auto;
   -webkit-touch-callout: none;
 }
@@ -141,7 +141,7 @@
   }
 
   .site-logo img {
-    height: 38px;
+    height: 44px;
   }
 
   .site-logo { grid-area: 1 / 1; }

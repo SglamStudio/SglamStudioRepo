@@ -6,7 +6,7 @@ export function Header() {
   return `<header class="site-header" id="top">
     <div class="site-header__bar">
       <a class="site-logo" href="#top" aria-label="Glam Studio, ir al inicio">
-        <img src="${escapeAttribute(storeConfig.logoUrl)}" alt="Glam Studio" width="101" height="48" data-loaded="1">
+        <img src="${escapeAttribute(storeConfig.logoUrl)}" alt="Glam Studio" width="74" height="54" data-loaded="1">
       </a>
       <nav class="site-nav" id="siteNav" aria-label="Principal">
         <a href="#top">Inicio</a>
