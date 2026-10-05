@@ -1,0 +1,141 @@
+/* ─── BÚSQUEDA ─── */
+.search-panel {
+  display: none;
+  padding: 12px var(--gutter) 16px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.site-header.search-open .search-panel {
+  display: block;
+}
+
+.search-bar-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  background: var(--blush);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.search-bar-wrap:focus-within {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+
+.search-icon {
+  flex-shrink: 0;
+  margin: 0 6px 0 18px;
+  color: var(--muted);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.search-bar-wrap input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 8px 13px 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.search-bar-wrap input::placeholder {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.search-clear-btn {
+  display: none;
+  flex-shrink: 0;
+  padding: 13px 16px 13px 8px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-clear-btn.visible {
+  display: block;
+}
+
+.search-clear-btn:hover {
+  color: var(--ink);
+}
+
+.search-results-info {
+  display: none;
+  padding: 18px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.search-results-info.visible {
+  display: block;
+}
+
+.search-results-info span {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.product-card.search-hidden,
+.catalog-category.search-hidden,
+.catalog-category.filter-hidden {
+  display: none !important;
+}
+
+/* ─── CATEGORÍAS (botones de filtro) ─── */
+.category-pills {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px var(--gutter) 0;
+  scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
+.category-pills__track {
+  display: flex;
+  gap: 10px;
+  padding: 2px 0 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-pills__track::-webkit-scrollbar {
+  display: none;
+}
+
+.pill {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: 11px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pill:hover {
+  border-color: var(--ink);
+}
+
+.pill.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
