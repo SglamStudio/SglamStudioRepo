@@ -262,24 +262,17 @@ SELECT
   b.name AS brand_name,
   img.url AS image_url,
   img.alt_text,
-  img2.url AS second_image_url,
   price.price_cop,
   price.valid_from AS price_valid_from
 FROM catalog_products p
 JOIN catalog_categories c ON c.id = p.category_id
 JOIN catalog_brands b ON b.id = p.brand_id
 LEFT JOIN catalog_product_images img ON img.product_id = p.id AND img.is_primary
-LEFT JOIN LATERAL (
-  SELECT url FROM catalog_product_images
-  WHERE product_id = p.id AND NOT is_primary
-  ORDER BY sort_order, created_at
-  LIMIT 1
-) img2 ON TRUE
 LEFT JOIN catalog_price_history price ON price.product_id = p.id AND price.valid_to IS NULL
 WHERE p.active = TRUE AND c.active = TRUE;
 
 COMMENT ON VIEW catalog_product_listing IS
-  'Listado público: solo categorías/productos activos, imagen principal, segunda imagen opcional y precio vigente.';
+  'Listado público: solo categorías/productos activos, imagen principal y precio vigente.';
 
 ALTER TABLE admin_devices ENABLE ROW LEVEL SECURITY;
 ALTER TABLE activation_tokens ENABLE ROW LEVEL SECURITY;

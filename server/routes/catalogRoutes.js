@@ -53,8 +53,14 @@ router.get('/categories', async (req, res, next) => {
 router.get('/products', async (req, res, next) => {
   try {
     const result = await pool.query(
-      `SELECT * FROM catalog_product_listing
-       ORDER BY category_sort_order, price_cop, name`
+      `SELECT l.*, second.url AS second_image_url
+       FROM catalog_product_listing l
+       LEFT JOIN LATERAL (
+         SELECT url FROM catalog_product_images
+         WHERE product_id = l.id AND is_primary = FALSE
+         ORDER BY sort_order, created_at LIMIT 1
+       ) second ON TRUE
+       ORDER BY l.category_sort_order, l.price_cop, l.name`
     );
     return res.json({ products: result.rows.map(mapProduct) });
   } catch (error) {
@@ -66,7 +72,14 @@ router.get('/products/:id', async (req, res, next) => {
   try {
     const productId = uuid.parse(req.params.id);
     const result = await pool.query(
-      `SELECT * FROM catalog_product_listing WHERE id = $1`,
+      `SELECT l.*, second.url AS second_image_url
+       FROM catalog_product_listing l
+       LEFT JOIN LATERAL (
+         SELECT url FROM catalog_product_images
+         WHERE product_id = l.id AND is_primary = FALSE
+         ORDER BY sort_order, created_at LIMIT 1
+       ) second ON TRUE
+       WHERE l.id = $1`,
       [productId]
     );
     if (!result.rowCount) return res.status(404).json({ error: 'PRODUCT_NOT_FOUND' });

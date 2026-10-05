@@ -344,7 +344,8 @@ function openZoom(image) {
     thumb.style.backgroundImage = zoomSources[index] ? `url("${zoomSources[index].replace(/"/g, '%22')}")` : '';
   });
   zoomImage.classList.remove('is-swapping');
-  const hovering = window.matchMedia('(hover: hover)').matches && Boolean(card?.matches(':hover'));
+  const hovering = Boolean(card?.classList.contains('show-second'))
+    || (window.matchMedia('(hover: hover)').matches && Boolean(card?.matches(':hover')));
   showZoomImage(zoomSources.length > 1 && hovering ? 1 : 0, false);
   zoomImage.alt = card?.querySelector('.product-lazy-img')?.alt || image.alt;
   previousFocus = image;
@@ -546,7 +547,7 @@ document.addEventListener('click', (event) => {
   const addButton = event.target.closest('[data-action="add-to-cart"]');
   if (addButton) addToCart(addButton);
   const productImage = event.target.closest('.product-image-wrap img');
-  if (productImage) openZoom(productImage);
+  if (productImage && !suppressImageClick) openZoom(productImage);
 });
 document.getElementById('cartItemsContainer').addEventListener('click', (event) => {
   const button = event.target.closest('[data-action]');
@@ -634,10 +635,48 @@ function initSecondImages() {
       card?.removeAttribute('data-img2');
       card?.querySelector('.product-img-dots')?.remove();
     };
-    if (image.complete && image.naturalWidth === 0 && image.currentSrc) fail();
-    else image.addEventListener('error', fail, { once: true });
+    // Algunos CDN exigen el tipo de contenido en la URL (Safari/iOS): se reintenta una vez.
+    const retryOrFail = () => {
+      const src = image.getAttribute('src') || '';
+      if (!src.includes('response-content-type') && !image.dataset.retried) {
+        image.dataset.retried = '1';
+        image.src = `${src}${src.includes('?') ? '&' : '?'}response-content-type=image%2Fpng`;
+        return;
+      }
+      fail();
+    };
+    if (image.complete && image.naturalWidth === 0 && image.currentSrc) retryOrFail();
+    else image.addEventListener('error', retryOrFail);
   });
 }
+
+// En celulares no hay "pasar el cursor": se desliza la foto o se tocan los puntos.
+function toggleSecondImage(card) {
+  if (card?.classList.contains('has-second-image')) card.classList.toggle('show-second');
+}
+
+let cardSwipe = null;
+let suppressImageClick = false;
+document.addEventListener('touchstart', (event) => {
+  const wrap = event.target.closest('.has-second-image .product-image-wrap');
+  cardSwipe = wrap ? { x: event.touches[0].clientX, y: event.touches[0].clientY, card: wrap.closest('.product-card') } : null;
+}, { passive: true });
+document.addEventListener('touchend', (event) => {
+  if (!cardSwipe) return;
+  const dx = event.changedTouches[0].clientX - cardSwipe.x;
+  const dy = event.changedTouches[0].clientY - cardSwipe.y;
+  const { card } = cardSwipe;
+  cardSwipe = null;
+  if (Math.abs(dx) < 35 || Math.abs(dy) > Math.abs(dx)) return;
+  const showing = card.classList.contains('show-second');
+  if ((dx < 0 && !showing) || (dx > 0 && showing)) toggleSecondImage(card);
+  suppressImageClick = true;
+  window.setTimeout(() => { suppressImageClick = false; }, 400);
+});
+document.addEventListener('click', (event) => {
+  const dots = event.target.closest('.product-img-dots');
+  if (dots) toggleSecondImage(dots.closest('.product-card'));
+});
 
 // Las tarjetas aparecen suavemente al desplazarse por el catálogo.
 function initCardReveal() {

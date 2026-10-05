@@ -234,3 +234,13 @@ Para volver atrás, redespliega la versión anterior. Las tablas nuevas pueden q
 - `src/features/admin.js`: panel API-first, sin persistencia CRUD local.
 - `src/features/legacyBackup.js`: respaldo no destructivo.
 - `test/`: pruebas unitarias, HTTP e integración PostgreSQL opcional.
+
+
+## Dos fotos por producto
+
+Cada producto puede tener una segunda imagen opcional (campo "URL HTTPS de la segunda imagen" en el panel de administración).
+Se guarda en `catalog_product_images` como imagen no principal (`sort_order = 1`), por lo que **no requiere migración**.
+
+- Computador: al pasar el cursor la foto cambia con una animación; al hacer clic se abre el visor con miniaturas (también flechas ← →).
+- Celular: deslizar la foto o tocar los puntitos cambia de imagen; tocar la foto abre el visor (deslizar cambia de foto).
+- Si la segunda imagen no carga, la tarjeta vuelve a mostrar solo la principal.
