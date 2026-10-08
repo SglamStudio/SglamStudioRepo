@@ -249,3 +249,7 @@ Se guarda en `catalog_product_images` como imagen no principal (`sort_order = 1`
 
 En un dispositivo autorizado, el panel se abre al hacer clic en el logo del encabezado (ya no hay botón flotante).
 Para cualquier otro visitante el logo solo lleva al inicio de la página.
+
+## Panel de administrador (diseño claro y ordenado)
+
+El panel tiene barra superior blanca con el logo, pestañas **Productos / Categorías / Dispositivos**, lista de productos en filas y una barra inferior fija para guardar precios. Se abre haciendo clic en el logo del encabezado.

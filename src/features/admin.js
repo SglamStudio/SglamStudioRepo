@@ -568,6 +568,20 @@ export function initAdminPanel() {
   if (initialized) return;
   initialized = true;
   byId('adminCloseBtn').addEventListener('click', closeAdminPanel);
+  document.querySelectorAll('[data-admin-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.adminTab;
+      document.querySelectorAll('[data-admin-tab]').forEach((item) => {
+        const on = item === tab;
+        item.classList.toggle('active', on);
+        if (on) item.setAttribute('aria-current', 'page');
+        else item.removeAttribute('aria-current');
+      });
+      document.querySelectorAll('[data-admin-pane]').forEach((pane) => {
+        pane.hidden = pane.dataset.adminPane !== target;
+      });
+    });
+  });
   byId('adminCatTabs').addEventListener('click', (event) => {
     const button = event.target.closest('[data-category-id]');
     if (!button) return;
