@@ -70,19 +70,15 @@ async function activateFromLink(token) {
   });
 }
 
-function mountAdminToolbar(openAdminPanel) {
-  const toolbar = document.createElement('button');
-  toolbar.className = 'admin-toolbar-btn';
-  toolbar.type = 'button';
-  toolbar.setAttribute('aria-label', 'Abrir administración');
-  const icon = document.createElement('i');
-  icon.className = 'fas fa-sliders-h';
-  icon.setAttribute('aria-hidden', 'true');
-  const label = document.createElement('span');
-  label.textContent = 'Administrar';
-  toolbar.append(icon, label);
-  toolbar.addEventListener('click', openAdminPanel);
-  document.body.appendChild(toolbar);
+// El panel se abre al hacer clic en el logo, solo en dispositivos autorizados.
+// Para cualquier otro visitante el logo sigue llevando al inicio.
+function bindAdminToLogo(openAdminPanel) {
+  const logo = document.querySelector('.site-logo');
+  if (!logo) return;
+  logo.addEventListener('click', (event) => {
+    event.preventDefault();
+    openAdminPanel();
+  });
 }
 
 async function initAuthenticatedAdmin(session) {
@@ -95,7 +91,7 @@ async function initAuthenticatedAdmin(session) {
   document.body.insertAdjacentHTML('beforeend', AdminPanel());
   adminModule.initAdminPanel();
   initAdminDeviceManager();
-  mountAdminToolbar(adminModule.openAdminPanel);
+  bindAdminToLogo(adminModule.openAdminPanel);
 }
 
 async function initAdminAccess() {

@@ -244,3 +244,8 @@ Se guarda en `catalog_product_images` como imagen no principal (`sort_order = 1`
 - Computador: al pasar el cursor la foto cambia con una animación; al hacer clic se abre el visor con miniaturas (también flechas ← →).
 - Celular: deslizar la foto o tocar los puntitos cambia de imagen; tocar la foto abre el visor (deslizar cambia de foto).
 - Si la segunda imagen no carga, la tarjeta vuelve a mostrar solo la principal.
+
+## Abrir el panel de administración
+
+En un dispositivo autorizado, el panel se abre al hacer clic en el logo del encabezado (ya no hay botón flotante).
+Para cualquier otro visitante el logo solo lleva al inicio de la página.

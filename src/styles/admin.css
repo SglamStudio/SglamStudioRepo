@@ -2,24 +2,6 @@
    GLAM STUDIO — ADMIN PANEL (Hidden Price Editor)
    ═══════════════════════════════════════════════════════════════ */
 
-.admin-toolbar-btn {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 10000;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid var(--gold);
-    border-radius: 999px;
-    padding: 11px 16px;
-    background: #2d1228;
-    color: var(--gold-light);
-    box-shadow: 0 8px 25px rgba(26,10,20,0.35);
-    cursor: pointer;
-    font: 600 0.8rem 'Poppins', sans-serif;
-}
-.admin-toolbar-btn:hover { background: #3d1a38; }
 .admin-header-actions { display: flex; align-items: center; gap: 8px; }
 .admin-device-btn, .admin-revoke-btn {
     border: 1px solid rgba(212,168,67,0.45);
