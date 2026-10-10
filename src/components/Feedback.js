@@ -11,6 +11,7 @@ export function Feedback() {
         <h2 class="pd-name" id="pdName"></h2>
         <p class="pd-category" id="pdCategory"></p>
         <p class="pd-price" id="pdPrice"></p>
+        <div class="pd-use" id="pdUseBox" hidden><p class="pd-use-title">¿Para qué sirve?</p><p id="pdUse"></p></div>
         <p class="pd-label" id="pdQtyLabel">Cantidad</p>
         <div class="pd-qty" role="group" aria-labelledby="pdQtyLabel">
           <button type="button" id="pdMinus" aria-label="Reducir cantidad">&minus;</button>

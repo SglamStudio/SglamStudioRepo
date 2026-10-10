@@ -581,6 +581,8 @@ function openProductDetail(card, trigger) {
   document.getElementById('pdName').textContent = card.querySelector('.product-name')?.textContent || card.dataset.name;
   document.getElementById('pdCategory').textContent = card.closest('.catalog-category')?.querySelector('h2')?.textContent || '';
   document.getElementById('pdPrice').textContent = card.dataset.priceDisplay;
+  document.getElementById('pdUse').textContent = card.dataset.use || '';
+  document.getElementById('pdUseBox').hidden = !card.dataset.use;
   setPdQty(1);
   showPdImage(card.classList.contains('show-second') && pdSources.length > 1 ? 1 : 0);
   pdFocus = trigger;

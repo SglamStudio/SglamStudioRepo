@@ -257,3 +257,7 @@ El panel tiene barra superior blanca con el logo, pestañas **Productos / Catego
 ## Detalle del producto
 
 Al hacer clic en la imagen o el nombre de un producto se abre una ventana con las fotos, marca, nombre, categoría, precio, selector de cantidad y los botones "Agregar al carrito" y "Comprar ahora". Al tocar la foto grande se amplía.
+
+### "¿Para qué sirve?"
+
+La ventana del producto muestra un texto corto de para qué sirve. Se deduce automáticamente del nombre del producto con las reglas de `src/utils/productUse.js` (labial, corrector, base, rubor, pestañina, brocha, etc.). Para ajustar un texto, edita esas reglas.

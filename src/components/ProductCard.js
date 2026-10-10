@@ -1,4 +1,5 @@
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
+import { productUse } from '../utils/productUse.js';
 
 export function ProductCard(product) {
   const brand = product.displayBrand || product.brand;
@@ -12,6 +13,7 @@ export function ProductCard(product) {
     data-id="${escapeAttribute(product.id || '')}"
     data-name="${escapeAttribute(product.name)}"
     data-brand="${escapeAttribute(product.brand)}"
+    data-use="${escapeAttribute(product.description || productUse(product.name, product.category))}"
     data-price="${product.price}"
     data-price-display="${escapeAttribute(product.priceDisplay)}"
     data-img="${escapeAttribute(product.image)}"${second ? `
