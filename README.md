@@ -253,3 +253,7 @@ Para cualquier otro visitante el logo solo lleva al inicio de la página.
 ## Panel de administrador (diseño claro y ordenado)
 
 El panel tiene barra superior blanca con el logo, pestañas **Productos / Categorías / Dispositivos**, lista de productos en filas y una barra inferior fija para guardar precios. Se abre haciendo clic en el logo del encabezado.
+
+## Detalle del producto
+
+Al hacer clic en la imagen o el nombre de un producto se abre una ventana con las fotos, marca, nombre, categoría, precio, selector de cantidad y los botones "Agregar al carrito" y "Comprar ahora". Al tocar la foto grande se amplía.

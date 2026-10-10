@@ -85,7 +85,7 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: multiply;
-  cursor: zoom-in;
+  cursor: pointer;
   transition: transform 0.4s ease, opacity 0.4s ease;
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
@@ -267,6 +267,7 @@
 }
 
 .product-name {
+  cursor: pointer;
   margin-top: 4px;
   min-height: 2.7em;
   display: -webkit-box;

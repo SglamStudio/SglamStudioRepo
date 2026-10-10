@@ -54,13 +54,13 @@ function setAddButtonState(button, added) {
   button.classList.toggle('added', added);
 }
 
-function addToCart(button) {
-  const card = button.closest('.product-card');
+function addToCart(button, quantity = 1, sourceCard = null) {
+  const card = sourceCard || button.closest('.product-card');
   if (!card) return;
   const id = card.dataset.id || `${card.dataset.brand}::${card.dataset.name}`;
   const existing = cart.find((item) => item.id === id);
   if (existing) {
-    existing.qty += 1;
+    existing.qty += quantity;
   } else {
     cart.push({
       id,
@@ -69,7 +69,7 @@ function addToCart(button) {
       price: Number.parseInt(card.dataset.price, 10),
       priceDisplay: card.dataset.priceDisplay,
       img: card.dataset.img,
-      qty: 1,
+      qty: quantity,
     });
   }
   setAddButtonState(button, true);
@@ -334,10 +334,10 @@ function showZoomImage(index, animate = true) {
   zoomImage.classList.add('is-swapping');
 }
 
-function openZoom(image) {
+function openZoom(image, { sources = null, start = null, alt = '' } = {}) {
   const card = image.closest('.product-card');
-  zoomSources = [card?.dataset.img || image.currentSrc || image.src];
-  if (card?.dataset.img2) zoomSources.push(card.dataset.img2);
+  zoomSources = sources || [card?.dataset.img || image.currentSrc || image.src];
+  if (!sources && card?.dataset.img2) zoomSources.push(card.dataset.img2);
   zoomIndex = 0;
   zoomThumbs.hidden = zoomSources.length < 2;
   zoomThumbs.querySelectorAll('.zoom-thumb').forEach((thumb, index) => {
@@ -346,8 +346,8 @@ function openZoom(image) {
   zoomImage.classList.remove('is-swapping');
   const hovering = Boolean(card?.classList.contains('show-second'))
     || (window.matchMedia('(hover: hover)').matches && Boolean(card?.matches(':hover')));
-  showZoomImage(zoomSources.length > 1 && hovering ? 1 : 0, false);
-  zoomImage.alt = card?.querySelector('.product-lazy-img')?.alt || image.alt;
+  showZoomImage(start ?? (zoomSources.length > 1 && hovering ? 1 : 0), false);
+  zoomImage.alt = alt || card?.querySelector('.product-lazy-img')?.alt || image.alt;
   previousFocus = image;
   zoomOverlay.classList.add('active');
   zoomOverlay.setAttribute('aria-hidden', 'false');
@@ -543,11 +543,92 @@ function initSearch() {
   searchIcon.addEventListener('click', () => input.focus());
 }
 
+// ─── DETALLE DEL PRODUCTO ───
+const pdOverlay = document.getElementById('pdOverlay');
+const pdImage = document.getElementById('pdImage');
+const pdThumbs = document.getElementById('pdThumbs');
+let pdCard = null;
+let pdSources = [];
+let pdIndex = 0;
+let pdQty = 1;
+let pdFocus = null;
+
+function showPdImage(index) {
+  if (!pdSources[index]) return;
+  pdIndex = index;
+  pdImage.src = pdSources[index];
+  pdThumbs.querySelectorAll('.pd-thumb').forEach((thumb) => {
+    thumb.classList.toggle('is-active', Number(thumb.dataset.pdIndex) === index);
+  });
+}
+
+function setPdQty(value) {
+  pdQty = Math.min(99, Math.max(1, value));
+  document.getElementById('pdQty').textContent = String(pdQty);
+}
+
+function openProductDetail(card, trigger) {
+  pdCard = card;
+  const img = card.querySelector('.product-lazy-img');
+  pdSources = [card.dataset.img];
+  if (card.dataset.img2) pdSources.push(card.dataset.img2);
+  pdThumbs.hidden = pdSources.length < 2;
+  pdThumbs.querySelectorAll('.pd-thumb').forEach((thumb, index) => {
+    thumb.style.backgroundImage = pdSources[index] ? `url("${pdSources[index].replace(/"/g, '%22')}")` : '';
+  });
+  pdImage.alt = img?.alt || card.dataset.name;
+  document.getElementById('pdBrand').textContent = card.dataset.brand;
+  document.getElementById('pdName').textContent = card.querySelector('.product-name')?.textContent || card.dataset.name;
+  document.getElementById('pdCategory').textContent = card.closest('.catalog-category')?.querySelector('h2')?.textContent || '';
+  document.getElementById('pdPrice').textContent = card.dataset.priceDisplay;
+  setPdQty(1);
+  showPdImage(card.classList.contains('show-second') && pdSources.length > 1 ? 1 : 0);
+  pdFocus = trigger;
+  pdOverlay.classList.add('active');
+  pdOverlay.setAttribute('aria-hidden', 'false');
+  lockBodyScroll();
+  document.getElementById('pdClose').focus();
+}
+
+function closeProductDetail({ restoreFocus = true } = {}) {
+  if (!pdOverlay.classList.contains('active')) return;
+  pdOverlay.classList.remove('active');
+  pdOverlay.setAttribute('aria-hidden', 'true');
+  pdImage.removeAttribute('src');
+  pdCard = null;
+  unlockBodyScroll();
+  if (restoreFocus) pdFocus?.focus?.();
+}
+
+pdOverlay.addEventListener('click', (event) => {
+  if (event.target === pdOverlay) return closeProductDetail();
+  const thumb = event.target.closest('.pd-thumb');
+  if (thumb) showPdImage(Number(thumb.dataset.pdIndex));
+});
+document.getElementById('pdClose').addEventListener('click', () => closeProductDetail());
+document.getElementById('pdMinus').addEventListener('click', () => setPdQty(pdQty - 1));
+document.getElementById('pdPlus').addEventListener('click', () => setPdQty(pdQty + 1));
+document.getElementById('pdMain').addEventListener('click', () => {
+  if (pdCard) openZoom(pdImage, { sources: pdSources, start: pdIndex, alt: pdImage.alt });
+});
+document.getElementById('pdAdd').addEventListener('click', (event) => {
+  if (pdCard) addToCart(event.currentTarget, pdQty, pdCard);
+});
+document.getElementById('pdBuy').addEventListener('click', () => {
+  if (!pdCard) return;
+  addToCart(document.getElementById('pdAdd'), pdQty, pdCard);
+  closeProductDetail({ restoreFocus: false });
+  openCart();
+});
+
 document.addEventListener('click', (event) => {
   const addButton = event.target.closest('[data-action="add-to-cart"]');
   if (addButton) addToCart(addButton);
   const productImage = event.target.closest('.product-image-wrap img');
-  if (productImage && !suppressImageClick) openZoom(productImage);
+  if (suppressImageClick) return;
+  const opener = productImage || event.target.closest('.product-name');
+  const card = opener?.closest('.product-card');
+  if (card) openProductDetail(card, opener);
 });
 document.getElementById('cartItemsContainer').addEventListener('click', (event) => {
   const button = event.target.closest('[data-action]');
@@ -596,7 +677,8 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Tab') {
     const activeDialog = document.getElementById('checkoutOverlay').classList.contains('active')
       ? document.getElementById('checkoutOverlay')
-      : zoomOverlay.classList.contains('active') ? zoomOverlay : null;
+      : zoomOverlay.classList.contains('active') ? zoomOverlay
+      : pdOverlay.classList.contains('active') ? pdOverlay : null;
     if (activeDialog) {
       const controls = [...activeDialog.querySelectorAll('button:not([disabled]), input:not([disabled])')]
         .filter((element) => element.offsetParent !== null);
@@ -619,7 +701,8 @@ document.addEventListener('keydown', (event) => {
     return;
   }
   if (event.key !== 'Escape') return;
-  closeZoom();
+  if (zoomOverlay.classList.contains('active')) { closeZoom(); return; }
+  closeProductDetail();
   closeCheckoutForm();
   closeCart();
   navigation.setMenu(false);
