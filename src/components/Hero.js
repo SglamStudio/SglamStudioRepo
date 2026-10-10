@@ -1,26 +1,13 @@
 import { escapeAttribute, escapeHtml } from '../utils/html.js';
 
-// Productos reales del catálogo que componen la imagen de portada.
-const SHOWCASE_SLOTS = [
-  /(l[áa]piz de labios|labial|lip ?gloss|brillo labial)/i,
-  /(rubor|polvo compacto)/i,
-  /(base l[íi]quida|base )/i,
-  /(set de brochas|brocha)/i
-];
-
+// Cuatro productos cualquiera del catálogo, distintos en cada visita.
 function pickShowcase(products) {
-  const used = new Set();
-  const picks = [];
-  for (const pattern of SHOWCASE_SLOTS) {
-    const match = products.find((product) => (
-      product.image && !used.has(product) && pattern.test(product.displayName || product.name || '')
-    ));
-    if (match) {
-      used.add(match);
-      picks.push(match);
-    }
+  const pool = products.filter((product) => product.image);
+  for (let i = pool.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return picks;
+  return pool.slice(0, 4);
 }
 
 function countBrands(products) {

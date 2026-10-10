@@ -261,3 +261,7 @@ Al hacer clic en la imagen o el nombre de un producto se abre una ventana con la
 ### "¿Para qué sirve?"
 
 La ventana del producto muestra un texto corto de para qué sirve. Se deduce automáticamente del nombre del producto con las reglas de `src/utils/productUse.js` (labial, corrector, base, rubor, pestañina, brocha, etc.). Para ajustar un texto, edita esas reglas.
+
+### Portada con productos al azar
+
+Las 4 fotos de la portada cambian en cada visita: se eligen al azar 4 productos cualquiera del catálogo (`src/components/Hero.js`).
