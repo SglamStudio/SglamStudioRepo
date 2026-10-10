@@ -21,6 +21,7 @@ function mapProduct(row) {
     imageAlt: row.alt_text || '',
     categoryId: row.category_id,
     category: row.category_slug,
+    isNew: Boolean(row.is_new),
   };
 }
 
@@ -53,14 +54,17 @@ router.get('/categories', async (req, res, next) => {
 router.get('/products', async (req, res, next) => {
   try {
     const result = await pool.query(
-      `SELECT l.*, second.url AS second_image_url
+      `SELECT l.*, second.url AS second_image_url,
+              (cp.created_at > NOW() - INTERVAL '14 days'
+                AND cp.created_at > (SELECT MIN(created_at) FROM catalog_products) + INTERVAL '1 day') AS is_new
        FROM catalog_product_listing l
+       JOIN catalog_products cp ON cp.id = l.id
        LEFT JOIN LATERAL (
          SELECT url FROM catalog_product_images
          WHERE product_id = l.id AND is_primary = FALSE
          ORDER BY sort_order, created_at LIMIT 1
        ) second ON TRUE
-       ORDER BY l.category_sort_order, l.price_cop, l.name`
+       ORDER BY l.category_sort_order, is_new DESC, l.price_cop, l.name`
     );
     return res.json({ products: result.rows.map(mapProduct) });
   } catch (error) {
@@ -72,8 +76,11 @@ router.get('/products/:id', async (req, res, next) => {
   try {
     const productId = uuid.parse(req.params.id);
     const result = await pool.query(
-      `SELECT l.*, second.url AS second_image_url
+      `SELECT l.*, second.url AS second_image_url,
+              (cp.created_at > NOW() - INTERVAL '14 days'
+                AND cp.created_at > (SELECT MIN(created_at) FROM catalog_products) + INTERVAL '1 day') AS is_new
        FROM catalog_product_listing l
+       JOIN catalog_products cp ON cp.id = l.id
        LEFT JOIN LATERAL (
          SELECT url FROM catalog_product_images
          WHERE product_id = l.id AND is_primary = FALSE

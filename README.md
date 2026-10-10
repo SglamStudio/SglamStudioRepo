@@ -265,3 +265,8 @@ La ventana del producto muestra un texto corto de para qué sirve. Se deduce aut
 ### Portada con productos al azar
 
 Las 4 fotos de la portada cambian en cada visita: se eligen al azar 4 productos cualquiera del catálogo (`src/components/Hero.js`).
+
+### Productos nuevos y "¿Para qué sirve?" automático
+
+- Un producto agregado desde el panel muestra la etiqueta **Nuevo** durante 14 días y aparece de primero en su categoría. Los productos cargados todos juntos al inicio no cuentan como nuevos.
+- El texto "¿Para qué sirve?" se genera solo para cualquier producto, también los que agregues después, a partir de su nombre (`src/utils/productUse.js`). Si el nombre no coincide con ninguna regla, usa un texto general de su categoría.

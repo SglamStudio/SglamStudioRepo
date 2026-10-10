@@ -9,7 +9,7 @@ export function ProductCard(product) {
     ? `<img src="${escapeAttribute(second)}" alt="" aria-hidden="true" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="product-img-second">`
     : '';
   const dots = second ? '<span class="product-img-dots" aria-hidden="true"><i></i><i></i></span>' : '';
-  return `<article class="product-card${second ? ' has-second-image' : ''}"
+  return `<article class="product-card${second ? ' has-second-image' : ''}${product.isNew ? ' is-new' : ''}"
     data-id="${escapeAttribute(product.id || '')}"
     data-name="${escapeAttribute(product.name)}"
     data-brand="${escapeAttribute(product.brand)}"
@@ -19,6 +19,7 @@ export function ProductCard(product) {
     data-img="${escapeAttribute(product.image)}"${second ? `
     data-img2="${escapeAttribute(second)}"` : ''}>
     <div class="product-image-wrap">
+      ${product.isNew ? '<span class="new-badge">Nuevo</span>' : ''}
       <img src="${escapeAttribute(product.image)}" alt="${escapeAttribute(name)} ${escapeAttribute(brand)}" referrerpolicy="no-referrer" class="product-lazy-img">
       ${secondImg}${dots}
       <button class="fav-btn" type="button" data-action="toggle-favorite" aria-pressed="false" aria-label="Guardar ${escapeAttribute(name)} en favoritos"><i class="far fa-heart" aria-hidden="true"></i></button>

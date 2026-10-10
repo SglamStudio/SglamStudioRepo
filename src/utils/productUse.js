@@ -45,6 +45,8 @@ const FALLBACK = {
   brochas: 'Accesorio o cuidado de la piel para aplicar y complementar tu maquillaje.',
 };
 
+const DEFAULT_USE = 'Producto de belleza para complementar tu rutina de maquillaje y cuidado.';
+
 function normalize(text) {
   return String(text || '').toLocaleLowerCase('es').normalize('NFD').replace(/[̀-ͯ]/g, '');
 }
@@ -54,5 +56,5 @@ export function productUse(name, category = '') {
   for (const [pattern, use] of RULES) {
     if (pattern.test(text)) return use;
   }
-  return FALLBACK[category] || '';
+  return FALLBACK[category] || DEFAULT_USE;
 }
