@@ -15,6 +15,7 @@ import catalogRoutes from './routes/catalogRoutes.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, '..');
+const siteUrl = 'https://sglam-studio-repo.vercel.app';
 
 export function createApp(app = express()) {
   app.disable('x-powered-by');
@@ -52,6 +53,18 @@ export function createApp(app = express()) {
     } catch {
       return res.status(503).json({ ok: false });
     }
+  });
+
+  app.get('/robots.txt', (req, res) => {
+    res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${siteUrl}/sitemap.xml\n`);
+  });
+  app.get('/sitemap.xml', (req, res) => {
+    res.type('application/xml').send(
+      `<?xml version="1.0" encoding="UTF-8"?>\n` +
+      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+      `  <url><loc>${siteUrl}/</loc></url>\n` +
+      `</urlset>`
+    );
   });
 
   app.use(express.static(path.join(projectRoot, 'public')));

@@ -47,6 +47,7 @@ npm run dev
 - Vite: `http://localhost:5173`
 - API Express: `http://localhost:3001`
 - `npm run dev` inicia ambos procesos y Vite reenvía `/api` al backend.
+- SEO público: metadatos para buscadores y redes sociales, datos estructurados, `/robots.txt` y `/sitemap.xml` en `https://sglam-studio-repo.vercel.app`.
 
 La semilla valida los datos antes de escribir. Debe informar exactamente 5 categorías, 72 marcas, 197 productos, 197 imágenes y 197 precios; también informa huérfanos, duplicados y precios inválidos.
 
