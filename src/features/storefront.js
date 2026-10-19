@@ -432,6 +432,11 @@ let activeBrand = '';
 
 function applyBrandFilter(brand) {
   activeBrand = brand;
+  const label = document.getElementById('brandPanelLabel');
+  if (label) {
+    const current = document.querySelector(`.brand-link[data-brand="${CSS.escape(brand)}"]`);
+    label.textContent = brand && current ? `Marcas · ${current.querySelector('span').textContent}` : 'Marcas';
+  }
   document.querySelectorAll('.brand-link').forEach((link) => {
     const active = link.dataset.brand === brand;
     link.classList.toggle('is-active', active);
@@ -452,6 +457,13 @@ function applyBrandFilter(brand) {
 function initBrandPanel() {
   const list = document.getElementById('brandPanel');
   if (!list) return;
+  const toggle = document.getElementById('brandPanelToggle');
+  toggle.addEventListener('click', () => {
+    const open = list.hidden;
+    list.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.closest('.brand-panel').classList.toggle('is-open', open);
+  });
   list.addEventListener('click', (event) => {
     const link = event.target.closest('.brand-link');
     if (!link) return;

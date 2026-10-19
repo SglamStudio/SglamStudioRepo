@@ -243,3 +243,77 @@
   .brand-link small { display: none; }
   .brand-link.is-active { border-color: var(--ink); }
 }
+
+/* Lista completa: el panel se desplaza por dentro cuando hay muchas marcas */
+.brand-panel__sub {
+  margin: 12px 0 4px;
+  padding: 12px 8px 4px;
+  border-top: 1px solid var(--line);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (min-width: 1100px) {
+  .brand-panel__list {
+    max-height: calc(100vh - var(--header-h) - 150px);
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--blush-deep) transparent;
+  }
+}
+
+@media (max-width: 1099px) {
+  .brand-panel__sub { display: none; }
+}
+
+/* Panel plegable: solo se ve la palabra "Marcas" hasta que se toca */
+.brand-panel__list[hidden] { display: none; }
+
+.brand-panel:not(.is-open) { padding-top: 6px; padding-bottom: 6px; }
+
+.brand-panel__title { padding: 0; border-bottom: 0; margin: 0; }
+.brand-panel.is-open .brand-panel__title { margin-bottom: 10px; border-bottom: 1px solid var(--line); }
+
+.brand-panel__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 6px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+
+.brand-panel__chevron {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.brand-panel.is-open .brand-panel__chevron { transform: rotate(-135deg) translateY(-2px); }
+
+@media (max-width: 1099px) {
+  .brand-panel,
+  .brand-panel:not(.is-open) { padding: 0; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--paper); }
+  .brand-panel__title { display: block; margin: 0; }
+  .brand-panel.is-open .brand-panel__title { margin: 0; border-bottom: 1px solid var(--line); }
+  .brand-panel__toggle { padding: 12px 16px; }
+  .brand-panel__list { padding: 10px 12px 12px; }
+}

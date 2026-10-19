@@ -273,4 +273,4 @@ Las 4 fotos de la portada cambian en cada visita: se eligen al azar 4 productos 
 
 ### Panel de marcas
 
-A la derecha del catálogo hay un panel con las 10 marcas más reconocidas; en celular y tablet pasa a ser una fila deslizable sobre los productos. Al tocar una marca se muestran solo sus productos; al tocarla otra vez se quita el filtro. Por defecto muestra las 10 marcas con más productos. Para elegirlas tú, escribe los nombres en `featuredBrands` de `src/config/store.js` (por ejemplo `['OG', 'Engol', 'Montoc']`). Código: `src/components/BrandPanel.js`.
+A la derecha del catálogo hay un panel plegable con todas las marcas (empieza cerrado; se abre y se cierra tocando la palabra "Marcas"): arriba las 10 más reconocidas y debajo "Otras marcas" en orden alfabético (el panel se desplaza por dentro). En celular y tablet pasa a ser una fila deslizable sobre los productos. Al tocar una marca se muestran solo sus productos; al tocarla otra vez se quita el filtro. Por defecto las destacadas son las 10 con más productos; para elegirlas tú, escribe los nombres en `featuredBrands` de `src/config/store.js`. Código: `src/components/BrandPanel.js`.
