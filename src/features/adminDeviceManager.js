@@ -86,7 +86,8 @@ export function initAdminDeviceManager() {
       });
       inviteResult.replaceChildren();
       const text = document.createElement('span');
-      text.textContent = `Enlace para ${label} (vence ${dateLabel(result.expiresAt)}): `;
+      const neverExpires = new Date(result.expiresAt).getUTCFullYear() >= 9000;
+      text.textContent = `Enlace para ${label} (${neverExpires ? 'no vence' : `vence ${dateLabel(result.expiresAt)}`}): `;
       const link = document.createElement('code');
       link.textContent = result.activationUrl;
       const copy = document.createElement('button');

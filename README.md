@@ -64,8 +64,8 @@ APP_ORIGIN=https://tu-dominio.example
 DATABASE_URL=postgresql://postgres.PROJECT_REF:DB_PASSWORD@aws-REGION.pooler.supabase.com:5432/postgres
 DATABASE_SSL=true
 DATABASE_POOL_MAX=10
-ADMIN_SESSION_DAYS=30
-ACTIVATION_TOKEN_MINUTES=10
+ADMIN_SESSION_DAYS=90
+ACTIVATION_TOKEN_MINUTES=0
 CSRF_SECRET=un-secreto-aleatorio-de-32-o-mas-caracteres
 ```
 
@@ -98,7 +98,7 @@ npm run admin:create-invite -- --name "Mateo - computador principal" --origin "h
 
 El enlace:
 
-- vence según `ACTIVATION_TOKEN_MINUTES`;
+- vence según `ACTIVATION_TOKEN_MINUTES` (por defecto `0` = no vence nunca) y se puede usar una sola vez;
 - se usa una sola vez;
 - guarda únicamente SHA-256 del token en PostgreSQL;
 - crea un dispositivo y una sesión independiente;
@@ -185,8 +185,8 @@ APP_ORIGIN=https://tu-dominio-estable.vercel.app
 DATABASE_URL=postgresql://postgres.PROJECT_REF:DB_PASSWORD@aws-REGION.pooler.supabase.com:6543/postgres
 DATABASE_SSL=true
 DATABASE_POOL_MAX=2
-ADMIN_SESSION_DAYS=30
-ACTIVATION_TOKEN_MINUTES=10
+ADMIN_SESSION_DAYS=90
+ACTIVATION_TOKEN_MINUTES=0
 CSRF_SECRET=un-secreto-aleatorio-y-estable-de-32-o-mas-caracteres
 ```
 
@@ -271,3 +271,7 @@ Las 4 fotos de la portada cambian en cada visita: se eligen al azar 4 productos 
 
 - Un producto agregado desde el panel muestra la etiqueta **Nuevo** durante 14 días y aparece de primero en su categoría. Los productos cargados todos juntos al inicio no cuentan como nuevos.
 - El texto "¿Para qué sirve?" se genera solo para cualquier producto, también los que agregues después, a partir de su nombre (`src/utils/productUse.js`). Si el nombre no coincide con ninguna regla, usa un texto general de su categoría.
+
+### Marcas
+
+Debajo de las categorías hay una barra con las marcas del catálogo (de la que tiene más productos a la que tiene menos), con "Ver todas las marcas" para desplegarlas. Al tocar una marca se muestran solo sus productos; al tocarla otra vez se quita el filtro. Se arma sola con los productos, así que una marca nueva aparece apenas agregues un producto de esa marca (`src/components/BrandNav.js`).

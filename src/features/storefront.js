@@ -1,4 +1,5 @@
 import { storeConfig } from '../config/store.js';
+import { brandKey } from '../utils/brandKey.js';
 
 const money = new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 });
 const cart = [];
@@ -427,6 +428,48 @@ function setCategoryFilter(slug) {
   });
 }
 
+let activeBrand = '';
+
+function applyBrandFilter(brand) {
+  activeBrand = brand;
+  document.querySelectorAll('.brand-link').forEach((link) => {
+    const active = link.dataset.brand === brand;
+    link.classList.toggle('is-active', active);
+    link.setAttribute('aria-pressed', String(active));
+  });
+  document.querySelectorAll('.product-card').forEach((card) => {
+    const match = !brand || brandKey(card.dataset.brand) === brand;
+    card.classList.toggle('brand-hidden', !match);
+  });
+  document.querySelectorAll('.catalog-category').forEach((section) => {
+    const visible = section.querySelectorAll('.product-card:not(.brand-hidden):not(.search-hidden)').length;
+    section.classList.toggle('brand-hidden', Boolean(brand) && visible === 0);
+    const label = section.querySelector('.category-count');
+    if (label) label.textContent = `${visible} producto${visible === 1 ? '' : 's'}`;
+  });
+}
+
+function initBrandNav() {
+  const list = document.getElementById('brandNav');
+  if (!list) return;
+  list.addEventListener('click', (event) => {
+    const link = event.target.closest('.brand-link');
+    if (!link) return;
+    const brand = link.dataset.brand;
+    applyBrandFilter(brand && brand === activeBrand ? '' : brand);
+    if (brand) {
+      setCategoryFilter('todo');
+      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  const more = document.getElementById('brandNavMore');
+  more?.addEventListener('click', () => {
+    const open = list.classList.toggle('is-expanded');
+    more.setAttribute('aria-expanded', String(open));
+    more.firstChild.textContent = open ? 'Ver menos ' : `Ver todas las marcas (${list.querySelectorAll('.brand-link[data-brand]:not([data-brand=""])').length}) `;
+  });
+}
+
 function initNavigation() {
   const header = document.getElementById('top');
   const menuToggle = document.getElementById('menuToggle');
@@ -517,7 +560,7 @@ function initSearch() {
     });
     document.querySelectorAll('.catalog-category').forEach((category) => {
       category.classList.toggle('search-hidden', Boolean(query) && !counts.has(category));
-      const visible = category.querySelectorAll('.product-card:not(.search-hidden)').length;
+      const visible = category.querySelectorAll('.product-card:not(.search-hidden):not(.brand-hidden)').length;
       const label = category.querySelector('.category-count');
       if (label) label.textContent = `${visible} producto${visible === 1 ? '' : 's'}`;
     });
@@ -791,6 +834,7 @@ function initCardReveal() {
 }
 
 const navigation = initNavigation();
+initBrandNav();
 initSecondImages();
 initCardReveal();
 initFavorites();

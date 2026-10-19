@@ -27,7 +27,10 @@ const [{ createActivationInvite }, { pool }] = await Promise.all([
 
 try {
   const invite = await createActivationInvite({ label });
-  console.log(`Enlace de activación (válido hasta ${invite.expiresAt.toISOString()}):`);
+  const neverExpires = invite.expiresAt.getUTCFullYear() >= 9000;
+  console.log(neverExpires
+    ? 'Enlace de activación (no vence; se puede usar una sola vez):'
+    : `Enlace de activación (válido hasta ${invite.expiresAt.toISOString()}):`);
   console.log(invite.activationUrl);
 } finally {
   await pool.end();

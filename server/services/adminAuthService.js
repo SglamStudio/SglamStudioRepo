@@ -13,7 +13,9 @@ export class AuthError extends AppError {
 
 export async function createActivationInvite({ label, createdByDeviceId = null }) {
   const token = createOpaqueToken(32);
-  const expiresAt = new Date(Date.now() + config.ACTIVATION_TOKEN_MINUTES * 60 * 1000);
+  const expiresAt = config.ACTIVATION_TOKEN_MINUTES === 0
+    ? new Date('9999-12-31T00:00:00Z')
+    : new Date(Date.now() + config.ACTIVATION_TOKEN_MINUTES * 60 * 1000);
   await pool.query(
     `INSERT INTO activation_tokens
       (id, token_hash, label, role, created_by_device_id, expires_at)
