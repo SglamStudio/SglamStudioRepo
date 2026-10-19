@@ -47,7 +47,6 @@ npm run dev
 - Vite: `http://localhost:5173`
 - API Express: `http://localhost:3001`
 - `npm run dev` inicia ambos procesos y Vite reenvía `/api` al backend.
-- SEO público: metadatos para buscadores y redes sociales, datos estructurados, `/robots.txt` y `/sitemap.xml` en `https://sglam-studio-repo.vercel.app`.
 
 La semilla valida los datos antes de escribir. Debe informar exactamente 5 categorías, 72 marcas, 197 productos, 197 imágenes y 197 precios; también informa huérfanos, duplicados y precios inválidos.
 
@@ -272,6 +271,6 @@ Las 4 fotos de la portada cambian en cada visita: se eligen al azar 4 productos 
 - Un producto agregado desde el panel muestra la etiqueta **Nuevo** durante 14 días y aparece de primero en su categoría. Los productos cargados todos juntos al inicio no cuentan como nuevos.
 - El texto "¿Para qué sirve?" se genera solo para cualquier producto, también los que agregues después, a partir de su nombre (`src/utils/productUse.js`). Si el nombre no coincide con ninguna regla, usa un texto general de su categoría.
 
-### Marcas
+### Panel de marcas
 
-Debajo de las categorías hay una barra con las marcas del catálogo (de la que tiene más productos a la que tiene menos), con "Ver todas las marcas" para desplegarlas. Al tocar una marca se muestran solo sus productos; al tocarla otra vez se quita el filtro. Se arma sola con los productos, así que una marca nueva aparece apenas agregues un producto de esa marca (`src/components/BrandNav.js`).
+A la derecha del catálogo hay un panel con las 10 marcas más reconocidas; en celular y tablet pasa a ser una fila deslizable sobre los productos. Al tocar una marca se muestran solo sus productos; al tocarla otra vez se quita el filtro. Por defecto muestra las 10 marcas con más productos. Para elegirlas tú, escribe los nombres en `featuredBrands` de `src/config/store.js` (por ejemplo `['OG', 'Engol', 'Montoc']`). Código: `src/components/BrandPanel.js`.

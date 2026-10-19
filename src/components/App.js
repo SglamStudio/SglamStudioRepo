@@ -1,7 +1,6 @@
 import { Header } from './Header.js';
 import { Hero } from './Hero.js';
 import { CategoryNav } from './CategoryNav.js';
-import { BrandNav } from './BrandNav.js';
 import { Catalog } from './Catalog.js';
 import { Footer } from './Footer.js';
 import { Cart } from './Cart.js';
@@ -17,7 +16,6 @@ export function App({ categories = [], products = [] } = {}) {
     Header(),
     Hero(products),
     CategoryNav(visibleCategories),
-    BrandNav(products),
     Catalog(visibleCategories, products),
     Footer(),
     Cart(),

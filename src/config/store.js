@@ -10,5 +10,8 @@ export const storeConfig = {
   tiktokHandle: 's.glamstudioo_',
   tiktokUrl: 'https://www.tiktok.com/@s.glamstudioo_',
   logoUrl,
-  logoLightUrl
+  logoLightUrl,
+  // Marcas del panel lateral, en este orden (máximo 10).
+  // Si la lista está vacía se usan las 10 marcas con más productos.
+  featuredBrands: []
 };

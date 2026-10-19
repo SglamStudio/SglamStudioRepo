@@ -142,59 +142,104 @@
   color: #fff;
 }
 
-/* ─── MARCAS ─── */
-.brand-nav {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 8px var(--gutter) 4px;
-  text-align: center;
+/* ─── PANEL DE MARCAS (lateral del catálogo) ─── */
+.brand-panel {
+  padding: 18px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
 }
 
-.brand-nav__list {
+.brand-panel__title {
+  margin: 0 0 10px;
+  padding: 0 6px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.brand-panel__list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2px 6px;
-  max-height: 84px;
-  overflow: hidden;
+  flex-direction: column;
+  gap: 2px;
 }
-
-.brand-nav__list.is-expanded { max-height: none; }
 
 .brand-link {
-  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 8px;
   border: 0;
+  border-radius: 10px;
   background: none;
   color: var(--ink);
   font-family: inherit;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
+  text-align: left;
   text-transform: uppercase;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease;
 }
 
-.brand-link:hover { border-bottom-color: var(--blush-deep); }
-.brand-link.is-active { font-weight: 700; border-bottom-color: var(--ink); }
-
-.brand-nav__more {
-  margin: 4px auto 0;
-  padding: 8px 14px;
-  border: 0;
-  background: none;
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 12.5px;
+.brand-link small {
+  font-size: 11px;
   font-weight: 600;
-  cursor: pointer;
+  color: var(--muted);
 }
 
-.brand-nav__more:hover { color: var(--ink); }
+.brand-link:hover { background: var(--blush-soft); }
 
-@media (max-width: 720px) {
-  .brand-nav { text-align: left; }
-  .brand-nav__list { justify-content: flex-start; max-height: 78px; }
-  .brand-link { padding: 9px 10px; font-size: 12px; }
+.brand-link.is-active {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.brand-link.is-active small { color: rgba(255, 255, 255, 0.7); }
+
+/* Computador ancho: el panel queda a la derecha del catálogo */
+@media (min-width: 1100px) {
+  .shop {
+    max-width: 1440px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 0 32px;
+    align-items: start;
+  }
+
+  .brand-panel {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    margin-top: 44px;
+  }
+}
+
+/* Tablet y celular: las marcas van en una fila deslizable sobre el catálogo */
+@media (max-width: 1099px) {
+  .shop { display: flex; flex-direction: column; }
+  .brand-panel { order: -1; padding: 10px 0; border: 0; border-radius: 0; background: none; }
+  .brand-panel__title { display: none; }
+  .brand-panel__list {
+    flex-direction: row;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  .brand-panel__list::-webkit-scrollbar { display: none; }
+  .brand-link {
+    flex: 0 0 auto;
+    padding: 9px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .brand-link small { display: none; }
+  .brand-link.is-active { border-color: var(--ink); }
 }

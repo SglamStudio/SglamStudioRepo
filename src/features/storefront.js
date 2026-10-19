@@ -449,24 +449,15 @@ function applyBrandFilter(brand) {
   });
 }
 
-function initBrandNav() {
-  const list = document.getElementById('brandNav');
+function initBrandPanel() {
+  const list = document.getElementById('brandPanel');
   if (!list) return;
   list.addEventListener('click', (event) => {
     const link = event.target.closest('.brand-link');
     if (!link) return;
     const brand = link.dataset.brand;
     applyBrandFilter(brand && brand === activeBrand ? '' : brand);
-    if (brand) {
-      setCategoryFilter('todo');
-      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-  const more = document.getElementById('brandNavMore');
-  more?.addEventListener('click', () => {
-    const open = list.classList.toggle('is-expanded');
-    more.setAttribute('aria-expanded', String(open));
-    more.firstChild.textContent = open ? 'Ver menos ' : `Ver todas las marcas (${list.querySelectorAll('.brand-link[data-brand]:not([data-brand=""])').length}) `;
+    if (brand) setCategoryFilter('todo');
   });
 }
 
@@ -834,7 +825,7 @@ function initCardReveal() {
 }
 
 const navigation = initNavigation();
-initBrandNav();
+initBrandPanel();
 initSecondImages();
 initCardReveal();
 initFavorites();
